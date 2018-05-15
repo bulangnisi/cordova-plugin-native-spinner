@@ -27,8 +27,11 @@
       </feature>
     </config-file>
 
+    <resource-file src="src/ios/gif_loading.gif" target="res/drawable/gif_loading.gif"/>
+    <framework src="com.github.bumptech.glide:glide:3.7.0"/>
     <source-file src="src/android/SpinnerDialog.java" target-dir="src/com/greybax/spinnerdialog" />
     <source-file src="src/android/CallbackProgressDialog.java" target-dir="src/com/greybax/spinnerdialog" />
+    
   </platform>
 
   <!-- ios -->
