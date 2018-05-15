@@ -53,11 +53,34 @@
 - (UIView *)overlay {
     if (!_overlay) {
         _overlay = [[UIView alloc] initWithFrame:self.rectForView];
-        _overlay.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:[alpha floatValue]];
-        _indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-        _indicator.center = _overlay.center;
-        [_indicator startAnimating];
-        [_overlay addSubview:_indicator];
+        _overlay.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha: 0.3];
+        
+//        _indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+//        _indicator.center = _overlay.center;
+//        [_indicator startAnimating];
+//        [_overlay addSubview:_indicator];
+        
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"gif_loading" ofType:@"gif"];
+        NSData *gifData = [NSData dataWithContentsOfFile:path];
+        CGRect r1 = CGRectMake(0,0,230,230);
+//        UIWebView *webView = [[UIWebView alloc] initWithFrame:_overlay.bounds];
+        UIWebView *webView = [[UIWebView alloc] initWithFrame:r1];
+        webView.scalesPageToFit = YES;
+        [webView loadData:gifData MIMEType:@"image/gif" textEncodingName:nil baseURL:nil];
+        webView.backgroundColor = [UIColor clearColor];
+        webView.opaque = NO;
+        webView.scrollView.bounces = NO;
+        
+        webView.center = _overlay.center;
+        
+        
+//        NSString *injectionJSString = @"var script = document.createElement('meta');"
+//        "script.name = 'viewport';"
+//        "script.content=\"width=device-width, initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0, user-scalable=no\";"
+//        "document.getElementsByTagName('head')[0].appendChild(script);";
+//        [webView stringByEvaluatingJavaScriptFromString:injectionJSString];
+        
+        [_overlay addSubview:webView];
 
         _messageView = [[UILabel alloc] initWithFrame: self.rectForView];
         [_messageView setText: message == nil ? title : message];
@@ -76,7 +99,6 @@
     return _overlay;
 }
 
-
 - (void) show:(CDVInvokedUrlCommand*)command {
 
     callbackId = command.callbackId;
@@ -91,7 +113,7 @@
     
     UIViewController *rootViewController = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
 
-    [[self getTopMostViewController].view addSubview:self.overlay];
+    [rootViewController.view addSubview:self.overlay];
 
 }
 
@@ -109,13 +131,6 @@
         _messageView = nil;
         _overlay = nil;
     }
-}
-- (UIViewController*) getTopMostViewController {
-    UIViewController *presentingViewController = [[[UIApplication sharedApplication] delegate] window].rootViewController;
-    while (presentingViewController.presentedViewController != nil) {
-        presentingViewController = presentingViewController.presentedViewController;
-    }
-    return presentingViewController;
 }
 
 #pragma mark - PRIVATE METHODS

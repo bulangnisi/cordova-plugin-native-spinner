@@ -38,7 +38,7 @@
         <param name="ios-package" value="CDVSpinnerDialog"/>
       </feature>
     </config-file>
-
+    <resource-file src="src/ios/gif_loading.gif"/>
     <header-file src="src/ios/CDVSpinnerDialog.h" />
     <source-file src="src/ios/CDVSpinnerDialog.m" />
   </platform>
