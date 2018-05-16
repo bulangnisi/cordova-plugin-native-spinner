@@ -60,11 +60,11 @@
 //        [_indicator startAnimating];
 //        [_overlay addSubview:_indicator];
         
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"gif_loading" ofType:@"gif"];
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"img_loading" ofType:@"png"];
         NSData *gifData = [NSData dataWithContentsOfFile:path];
-        CGRect r1 = CGRectMake(0,0,230,230);
+        CGRect viewRect = CGRectMake(0,0,130,130);
 //        UIWebView *webView = [[UIWebView alloc] initWithFrame:_overlay.bounds];
-        UIWebView *webView = [[UIWebView alloc] initWithFrame:r1];
+        UIWebView *webView = [[UIWebView alloc] initWithFrame:viewRect];
         webView.scalesPageToFit = YES;
         [webView loadData:gifData MIMEType:@"image/gif" textEncodingName:nil baseURL:nil];
         webView.backgroundColor = [UIColor clearColor];
