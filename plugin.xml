@@ -27,7 +27,7 @@
       </feature>
     </config-file>
 
-    <resource-file src="res/img_loading.png" target="res/drawable/img_loading.png"/>
+    <resource-file src="src/android/img_loading.webp" target="assets/img_loading.webp"/>
     <framework src="com.github.bumptech.glide:glide:3.6.0"/>
     <source-file src="src/android/SpinnerDialog.java" target-dir="src/com/greybax/spinnerdialog" />
     <source-file src="src/android/CallbackProgressDialog.java" target-dir="src/com/greybax/spinnerdialog" />
@@ -41,7 +41,7 @@
         <param name="ios-package" value="CDVSpinnerDialog"/>
       </feature>
     </config-file>
-    <resource-file src="res/img_loading.png"/>
+    <resource-file src="src/ios/img_loading.png"/>
     <header-file src="src/ios/CDVSpinnerDialog.h" />
     <source-file src="src/ios/CDVSpinnerDialog.m" />
   </platform>
