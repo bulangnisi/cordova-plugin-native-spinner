@@ -9,9 +9,16 @@ import org.apache.cordova.CordovaPlugin;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import android.content.res.Resources;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.widget.ProgressBar;
+import android.widget.ImageView;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.Toast;
+import android.view.ViewGroup;
+import android.app.AlertDialog;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -31,6 +38,8 @@ public class SpinnerDialog extends CordovaPlugin {
       final boolean isFixed = args.getBoolean(2);
                 
       final CordovaInterface cordova = this.cordova;
+
+
       Runnable runnable = new Runnable() {
         public void run() {
           
@@ -82,8 +91,80 @@ public class SpinnerDialog extends CordovaPlugin {
             dialog.setContentView(new ProgressBar(cordova.getActivity()));
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
           }
+
+          // add button
+          // try {
+          //   LinearLayout.LayoutParams bp = new LinearLayout.LayoutParams(      
+          //       LinearLayout.LayoutParams.FILL_PARENT,      
+          //       LinearLayout.LayoutParams.WRAP_CONTENT      
+          //     );
+          //   Button btn = new Button(cordova.getActivity());
+          //   cordova.getActivity().addContentView(btn, bp);
+          // } catch (Exception e) {
+          //   AlertDialog alert1 = new AlertDialog.Builder(cordova.getActivity())
+          //       .setTitle("标题")
+          //       .setMessage(e.toString())
+          //       .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+          //           @Override
+          //           public void onClick(DialogInterface dialog, int which) {
+          //           }
+          //       })
+          //       .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+          //           @Override
+          //           public void onClick(DialogInterface dialog, int which) {
+          //           }
+          //       })
+          //       .create();
+          //       alert1.show();
+          // }
+
+          // add new 
+          LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(      
+            200,      
+            200      
+          );
+    
+          Resources r = cordova.getContext().getResources();
+          int imgId = r.getIdentifier("img_loading", "drawable", cordova.getContext().getPackageName());
+          ImageView loaderView = new ImageView(cordova.getActivity());
+          
+          loaderView.setImageResource(imgId);
+
+          // ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(200,200);
+          // Toast.makeText(cordova.getActivity(), "你好!", Toast.LENGTH_LONG).show();
+          try {
+            Toast.makeText(cordova.getActivity(), imgId, Toast.LENGTH_LONG).show();
+            loaderView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)); 
+            loaderView.setBackgroundColor(Color.RED);
+            cordova.getActivity().addContentView(loaderView, p);  
+          } catch (Exception e) {
+            // Toast.makeText(cordova.getActivity(), e.toString(), Toast.LENGTH_LONG).show();
+            AlertDialog alert = new AlertDialog.Builder(cordova.getActivity())
+            .setTitle("标题")
+            .setMessage(e.toString())
+            .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                }
+            })
+            .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                }
+            })
+            .create();
+            alert.show();
+          }
+
         }
       };
+
+
+      
+      
+      
+
+
       this.cordova.getActivity().runOnUiThread(runnable);
 
     } else if (action.equals("hide")) {
